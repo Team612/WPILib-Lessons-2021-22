@@ -5,7 +5,7 @@ import random
 files = os.listdir('./susImages') #saves files
 numfiles = len(os.listdir('./susImages')) #print out number of files in directory
 print(numfiles)
-while numfiles < (6120 - 2):
+while numfiles < (6120):
     for fname in files: #iterate through files
         newfname = fname.replace('.png', ' copy.png') #add new filename to prevent errors
         path = os.path.join('./susImages', fname) #join paths
@@ -16,13 +16,17 @@ while numfiles < (6120 - 2):
         numfiles = len(os.listdir('./susImages')) #reset numfiles var
         if numfiles % 100 == 0:
             print(numfiles)
+            if numfiles >= 6120:
+                break
 
 files = os.listdir('./susImages') #saves files again
 
 intervals = [10000, 1000, 100, 10, 1]
 for i in intervals:
-    while len(files) - (6120 -2) >= i:
+    while len(files) - (6120) >= i:
         filesToBeRemoved = random.choices(files, k = i)
         for file in filesToBeRemoved:
             os.remove(os.path.join('./susImages', file))
         files = os.listdir('./susImages')
+numfiles = len(os.listdir('./susImages'))
+print(numfiles)
