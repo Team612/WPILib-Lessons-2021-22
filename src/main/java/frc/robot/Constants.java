@@ -13,11 +13,24 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    //Sparks
-    public static int SPARK_LEFT = 0;
-    public static int SPARK_RIGHT = 1;
+    //Talon Ports **change accordingly**
+    public static int TALON_FR = 6; 
+    public static int TALON_FL = 3;
+    public static int TALON_BR = 7;
+    public static int TALON_BL = 2;
 
-    //Encoders
-    public static int[] ENCODER_LEFT = {4,5};
-    public static int[] ENCODER_RIGHT = {6,7};
+    //Spark Ports (if needed) **change accordingly**
+    public static int SPARK_FR = 4; 
+    public static int SPARK_FL = 5; 
+    public static int SPARK_BR = 6; 
+    public static int SPARK_BL = 7; 
+
+    //Driver Ports **change accordingly**
+    public static int DRIVER_PORT = 0;
+    public static int GUNNER_PORT = 1;
+
+    //Joystick Ports **change accordingly**
+    public static int X_AXIS = 0;
+    public static int Y_AXIS = 1;
+    public static int ROTATION_AXIS = 4;
 }

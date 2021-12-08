@@ -6,15 +6,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.controls.ControlMap;
-import frc.robot.subsystems.RomiDrivetrain;
+import frc.robot.subsystems.DriveTrain;
 
-public class ArcadeDrive extends CommandBase {
-  /** Creates a new ArcadeDrive. */
-  private final RomiDrivetrain m_drivetrain;
-  public ArcadeDrive(RomiDrivetrain drivetrain){
-    m_drivetrain = drivetrain;
-    addRequirements(drivetrain);
-     
+public class DefaultDrive extends CommandBase {
+  /** Creates a new DefaultDrive. */
+  public DriveTrain drive_train;
+  public DefaultDrive(DriveTrain drive_train) {
+    this.drive_train = drive_train;
+    addRequirements(drive_train);
   }
 
   // Called when the command is initially scheduled.
@@ -24,14 +23,13 @@ public class ArcadeDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drivetrain.arcadeDrive(ControlMap.driver.getRawAxis(1), ControlMap.driver.getRawAxis(0));
-
+    this.drive_train.driveMecanum(-ControlMap.driver.getRawAxis(0), ControlMap.driver.getRawAxis(1), ControlMap.driver.getRawAxis(4));
+    //this.drive_train.driveMecanum(0,0,1);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
