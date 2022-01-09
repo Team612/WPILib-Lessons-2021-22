@@ -3,44 +3,51 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.RomiDrivetrain;
 
-public class EncoderForward extends CommandBase {
-  /** Creates a new EncoderForward. */
-  private final RomiDrivetrain m_drive;
-  private final double m_distance;
-  private final double m_speed;
-  public EncoderForward(double speed, double inches, RomiDrivetrain drive) {
-    m_distance = inches;
-    m_speed = speed;
-    m_drive = drive;
-    addRequirements(drive);
+public class PForward extends CommandBase {
+  /** Creates a new PForward. */
+  private final RomiDrivetrain m_drivetrain;
+  private double target_theta;
+  private double kP = 0.015;
+
+
+  public PForward(RomiDrivetrain drivetrain) {
+    m_drivetrain = drivetrain;
+    addRequirements(drivetrain);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.arcadeDrive(0, 0);
-    m_drive.resetEncoders();
+    m_drivetrain.resetEncoders();
+    m_drivetrain.resetGyro();
+    target_theta = m_drivetrain.getGyroAngleZ();
+
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_speed, 0);
+    
+    double error = target_theta- m_drivetrain.getGyroAngleZ();
+    m_drivetrain.tankDrive(.5 + (kP * error), .5 - (kP * error));
+    System.out.println("Error " + error);
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.arcadeDrive(0, 0);
+    m_drivetrain.tankDrive(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_drive.getAverageDistanceMeter()) >= m_distance;
+    return false;
   }
 }

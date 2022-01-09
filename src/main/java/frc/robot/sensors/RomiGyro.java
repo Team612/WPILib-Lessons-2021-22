@@ -7,8 +7,10 @@ package frc.robot.sensors;
 import edu.wpi.first.hal.SimDevice;
 import edu.wpi.first.hal.SimDouble;
 import edu.wpi.first.hal.SimDevice.Direction;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 
-public class RomiGyro {
+public class RomiGyro implements Gyro{
     //double data type for simulation for the angles and rates
     private SimDouble simRateX;
     private SimDouble simRateY;
@@ -22,11 +24,13 @@ public class RomiGyro {
     private double angleYOffset;
     private double angleZOffset;
 
-    //Constructor Gryo
+
+    SimDevice gyroSim;
+    //Constructor Gyro
     public RomiGyro(){
         //creating a SimDevice which is to simulate other devices that are not used by Wpilib
         //Instantiating SimDevice object that sets that object to be created (you must put in the device key in the key argument below) 
-        SimDevice gyroSim = SimDevice.create("Gyro:RomiGyro"); 
+        gyroSim = SimDevice.create("Gyro:RomiGyro"); 
         if(gyroSim != null){
             gyroSim.createBoolean("init", Direction.kOutput, true);
             simRateX = gyroSim.createDouble("rate_x", Direction.kInput, 0.0);
@@ -56,5 +60,26 @@ public class RomiGyro {
             angleYOffset = simAngleY.get();
             angleZOffset = simAngleZ.get();
         }
-    }    
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (gyroSim != null) {
+            gyroSim.close();
+          }
+    }
+
+    @Override
+    public void calibrate() {
+    }
+
+    @Override
+    public double getAngle() {
+        return getAngleZ();
+    }
+
+    @Override
+    public double getRate() {
+        return getRateZ();
+    }
 }
