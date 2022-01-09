@@ -54,6 +54,6 @@ public class EncoderRotate extends CommandBase {
      */
     inchPerDegree = Math.PI * 5.551 / 360;
     // Compare distance travelled from start to distance based on degree turn
-    return m_drivetrain.getAverageDistanceInch() >= (inchPerDegree * m_degrees);
+    return m_drivetrain.getAverageDistanceMeter() >= (inchPerDegree * m_degrees);
   }
 }
